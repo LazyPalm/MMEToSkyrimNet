@@ -2,18 +2,21 @@
 {% set actor_name = decnpc(actorUUID).name %}
 
 {# MME #}
-{{ "## Milk Maid" }}
 {% if is_in_faction(actorUUID, "MME_MilkMaidFaction") %}
+{{ "## Milk Maid" }}
 {% set milk_max = get_faction_rank(actorUUID, "bind_GlobalMilkMaxLevel") %}
 {% set milk_current = get_faction_rank(actorUUID, "MMEToSkyrimNetCurrentMilkFaction") %}
 {% set lactacid_current = get_faction_rank(actorUUID, "MMEToSkyrimNetLactacidFaction") %}
 {% if milk_current > 0 %}
 {% if milk_max / milk_current >= 0.6 %}
-- {{ actor_name }}'s breasts are getting heavy from all the milk building filling them.
-{% endif %}
-{% if milk_current >= milk_max %}
+- {{ actor_name }}'s breasts are getting heavy from all the milk filling them. The can be milked.
+{% else if milk_current >= milk_max %}
 - {{ actor_name }}'s breasts are full and leaking. They need to be milked.
+{% else %}
+- {{ actor_name }}'s breasts are still filling up with milk. They do not need to be milked.
 {% endif %}
+{% else %}
+- {{ actor_name }}'s breasts are empty of milk.
 {% endif %}
 {% if lactacid_current == 0 %}
 - {{ actor_name }}'s lactacid level has reached zero. They need to be fed more to continue producing milk.
